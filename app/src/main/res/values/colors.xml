@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fitzone_primary">#FF6D00</color>
+    <color name="fitzone_primary_dark">#E65100</color>
+    <color name="fitzone_primary_light">#FFE0B2</color>
+
+    <color name="fitzone_secondary">#0EA5E9</color>
+    <color name="fitzone_accent">#10B981</color>
+    <color name="fitzone_danger">#EF4444</color>
+
+    <color name="fitzone_bg">#F8FAFC</color>
+    <color name="fitzone_card_bg">#FFFFFF</color>
+    <color name="fitzone_text_primary">#0F172A</color>
+    <color name="fitzone_text_secondary">#64748B</color>
+    <color name="fitzone_border">#E2E8F0</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

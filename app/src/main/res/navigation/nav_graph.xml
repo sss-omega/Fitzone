@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/VhodFragment">
+
+    <fragment
+        android:id="@+id/VhodFragment"
+        android:name="kz.evn.otbor.ui.VhodFragment"
+        android:label="Вход в FitZone"
+        tools:layout="@layout/fragment_vhod">
+
+        <action
+            android:id="@+id/action_VhodFragment_to_RegistraciyaFragment"
+            app:destination="@id/RegistraciyaFragment" />
+
+        <action
+            android:id="@+id/action_VhodFragment_to_ZabylParolFragment"
+            app:destination="@id/ZabylParolFragment" />
+
+        <action
+            android:id="@+id/action_VhodFragment_to_ProfilFragment"
+            app:destination="@id/ProfilFragment"
+            app:popUpTo="@id/VhodFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RegistraciyaFragment"
+        android:name="kz.evn.otbor.ui.RegistraciyaFragment"
+        android:label="Регистрация"
+        tools:layout="@layout/fragment_registraciya">
+
+        <action
+            android:id="@+id/action_RegistraciyaFragment_to_ProfilFragment"
+            app:destination="@id/ProfilFragment"
+            app:popUpTo="@id/VhodFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ZabylParolFragment"
+        android:name="kz.evn.otbor.ui.ZabylParolFragment"
+        android:label="Забыли пароль"
+        tools:layout="@layout/fragment_zabyl_parol" />
+
+    <fragment
+        android:id="@+id/ProfilFragment"
+        android:name="kz.evn.otbor.ui.ProfilFragment"
+        android:label="Профиль клиента"
+        tools:layout="@layout/fragment_profil">
+
+        <action
+            android:id="@+id/action_ProfilFragment_to_VhodFragment"
+            app:destination="@id/VhodFragment"
+            app:popUpTo="@id/ProfilFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>
