@@ -18,20 +18,32 @@ data class PageResult<T>(
     val rows: List<T> = emptyList()
 )
 
+// ========== НАЧАЛО: ПОЛЯ ДЛЯ ВТОРОГО ЭКРАНА С ДАННЫМИ (НАПИСАНО ЗДЕСЬ) ==========
 data class RestaurantDto(
     val restaurantName: String = "",
     val rating: String? = "0.0",
     val restaurantType: String? = "Restaurant",
     val imageUrl: String? = null,
-    val distance: String? = "0.0"
+    val distance: String? = "0.0",
+    val businessHours: String? = null,
+    val remainingParkingSpaces: Int? = null,
+    val priceRange: String? = null,
+    val address: String? = null,
+    val description: String? = null
 )
 
 data class ScenicSpotDto(
     val spotName: String = "",
     val rating: String? = "0.0",
     val imageUrl: String? = null,
-    val distance: String? = "0.0"
+    val distance: String? = "0.0",
+    val openingHours: String? = null,
+    val ticketPrice: String? = null,
+    val touristPeriod: String? = null,
+    val address: String? = null,
+    val description: String? = null
 )
+// ========== КОНЕЦ: ПОЛЯ ДЛЯ ВТОРОГО ЭКРАНА С ДАННЫМИ ==========
 
 interface ApiService {
     @GET("system/api/restaurant/list")
@@ -51,6 +63,12 @@ object RetrofitClient {
     const val BASE_URL = "https://pureness-overbite-cod.ngrok-free.dev/"
 
     private val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor { chain ->
+            val request = chain.request().newBuilder()
+                .addHeader("ngrok-skip-browser-warning", "true")
+                .build()
+            chain.proceed(request)
+        }
         .connectTimeout(10, TimeUnit.SECONDS)
         .readTimeout(10, TimeUnit.SECONDS)
         .build()

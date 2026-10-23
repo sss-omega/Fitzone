@@ -41,7 +41,13 @@ class NearbyViewModel : ViewModel() {
                                 distancemap = item.distance?.toFloatOrNull() ?: 0f,
                                 reviewres = item.rating?.toFloatOrNull() ?: 0f,
                                 objecttype = item.restaurantType ?: "Restaurant",
-                                imageUrl = RetrofitClient.resolveImageUrl(item.imageUrl)
+                                imageUrl = RetrofitClient.resolveImageUrl(item.imageUrl),
+
+                                workingHours = item.businessHours ?: "10:00 - 22:00",
+                                parking = item.remainingParkingSpaces ?: 0,
+                                priceRange = item.priceRange ?: "$15-45",
+                                address = item.address ?: "",
+                                description = item.description ?: ""
                             )
                         )
                     }
@@ -58,7 +64,13 @@ class NearbyViewModel : ViewModel() {
                                 distancemap = item.distance?.toFloatOrNull() ?: 0f,
                                 reviewres = item.rating?.toFloatOrNull() ?: 0f,
                                 objecttype = "Attraction",
-                                imageUrl = RetrofitClient.resolveImageUrl(item.imageUrl)
+                                imageUrl = RetrofitClient.resolveImageUrl(item.imageUrl),
+                                // Данные для второго экрана:
+                                workingHours = item.openingHours ?: "08:30 - 17:00",
+                                parking = 0,
+                                priceRange = item.ticketPrice ?: "$5-20",
+                                address = item.address ?: "",
+                                description = item.description ?: ""
                             )
                         )
                     }

@@ -2,6 +2,7 @@ package kz.evn.wssession2
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
@@ -36,17 +37,30 @@ class ActivityUxUi : ComponentActivity() {
     }
 }
 
+// ========== НАЧАЛО: МОДЕЛЬ ДАННЫХ КАРТОЧКИ С ДОПОЛНИТЕЛЬНЫМИ ПОЛЯМИ (НАПИСАНО ЗДЕСЬ) ==========
 data class CardItemRes(
     val resname: String,
     val distancemap: Float,
     val reviewres: Float,
     val objecttype: String,
-    val imageUrl: String?
+    val imageUrl: String?,
+    // Поля для отображения на второй странице (странице деталей):
+    val workingHours: String = "10:00 - 22:00",
+    val parking: Int = 0,
+    val priceRange: String = "",
+    val address: String = "",
+    val description: String = ""
 )
+// ========== КОНЕЦ: МОДЕЛЬ ДАННЫХ КАРТОЧКИ ====================================================
 
+// ========== НАЧАЛО: НАВИГАЦИЯ В КАРТОЧКЕ (НАПИСАНО ЗДЕСЬ) ==========
 @Composable
-fun CartItemFun(item: CardItemRes) {
+fun CartItemFun(
+    item: CardItemRes,
+    onClick: () -> Unit = {} // <-- Параметр callback для перехода при нажатии
+) {
     Card(
+        onClick = onClick, // <-- При нажатии на карточку вызывается навигация
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 6.dp),
@@ -54,6 +68,7 @@ fun CartItemFun(item: CardItemRes) {
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
+// ========== КОНЕЦ: НАВИГАЦИЯ В КАРТОЧКЕ ============================
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -158,6 +173,30 @@ fun NearbyServicesScreen(viewModel: NearbyViewModel = viewModel()) {
             matchesCategory && matchesSearch
         }
     }
+
+    // ========== НАЧАЛО: НАВИГАЦИЯ НА ВТОРОЙ ЭКРАН (НАПИСАНО ЗДЕСЬ) ==========
+    // Состояние навигации: выбранная карточка продукта/заведения
+    // Если null -> остаемся на первом экране со списком
+    // Если не null -> отображаем второй экран (DetailScreen) с данными выбранной карточки
+    var selectedItem by remember { mutableStateOf<CardItemRes?>(null) }
+
+    // Если карточка была нажата, открываем второй экран
+    if (selectedItem != null) {
+        // Системная кнопка "Назад" (жест или стрелка Android)
+        BackHandler {
+            selectedItem = null // Возвращаемся обратно к первому экрану
+        }
+
+        // Показываем второй экран со всеми данными
+        DetailScreen(
+            item = selectedItem!!,
+            onBackClick = {
+                selectedItem = null // Кнопка "Назад" в тулбаре возвращает к первому экрану
+            }
+        )
+        return // Прерываем отрисовку списка, пока открыт второй экран
+    }
+    // ========== КОНЕЦ: НАВИГАЦИЯ НА ВТОРОЙ ЭКРАН =============================
 
     Scaffold(
         bottomBar = {
@@ -287,7 +326,14 @@ fun NearbyServicesScreen(viewModel: NearbyViewModel = viewModel()) {
                     .weight(1f)
             ) {
                 items(filteredList) { restaurant ->
-                    CartItemFun(item = restaurant)
+                    // ========== НАЧАЛО: ВЫЗОВ НАВИГАЦИИ ПРИ НАЖАТИИ (НАПИСАНО ЗДЕСЬ) ==========
+                    CartItemFun(
+                        item = restaurant,
+                        onClick = {
+                            selectedItem = restaurant // При нажатии передаем данные и открываем 2-й экран
+                        }
+                    )
+                    // ========== КОНЕЦ: ВЫЗОВ НАВИГАЦИИ ПРИ НАЖАТИИ ============================
                 }
             }
         }
