@@ -12,7 +12,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WsSession2Theme {
-                NearbyServicesScreen()
+                MainApp()
             }
         }
     }
