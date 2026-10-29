@@ -30,4 +30,6 @@ bin/
 /nbdist/
 /.nb-gradle/
 .vscode/
-.DS_Store.idea/
+.DS_Store
+.idea/
+
