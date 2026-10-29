@@ -1,0 +1,48 @@
+Session 1 - API Endpoints List
+
+1. Nearby Services - Restaurants
+- GET /system/api/restaurant/list
+  Parameters: pageNum (int), pageSize (int), restaurantName (string), restaurantType (string)
+- GET /system/api/restaurant/{restaurantId}
+  Parameters: restaurantId (long) in path
+
+2. Nearby Services - Scenic Spots
+- GET /system/api/scenicSpot/list
+  Parameters: pageNum (int), pageSize (int), spotName (string), address (string)
+- GET /system/api/scenicSpot/{spotId}
+  Parameters: spotId (long) in path
+
+3. Review Management
+- GET /system/api/review/list
+  Parameters: pageNum (int), pageSize (int), businessType (string), businessId (long)
+  Headers: Authorization: Token (optional)
+- GET /system/api/review/mine
+  Parameters: pageNum (int), pageSize (int), businessType (string), businessId (long)
+  Headers: Authorization: Token (required)
+- POST /system/api/review/add
+  Headers: Authorization: Token (required), Content-Type: application/json
+  Body: businessType, businessId, rating, reviewContent, imageUrls
+- DELETE /system/api/review/{reviewIds}
+  Headers: Authorization: Token (required)
+  Parameters: reviewIds (string, comma-separated) in path
+- POST /api/upload/images
+  Headers: Content-Type: multipart/form-data
+  Parameters: files (MultipartFile[])
+
+4. User Profile & Authentication
+- POST /api/auth/login
+  Headers: Content-Type: application/json
+  Body: username (string), password (string)
+- GET /api/auth/info
+  Headers: Authorization: Token (required)
+- POST /api/auth/logout
+  Headers: Authorization: Token (required)
+- GET /api/auth/check
+  Headers: Authorization: Token (required)
+
+5. Traffic & Route Planning
+- GET /system/api/congestion/list
+  Parameters: pageNum (int), pageSize (int), roadName (string), startLat (double), startLng (double), endLat (double), endLng (double)
+- POST /map_test/way
+  Headers: Content-Type: application/json
+  Body: pathWay (double[][]), mode (string)
